@@ -1,0 +1,108 @@
+# CDH1 Mutation Analysis - Default Configuration
+
+# Project Information
+project:
+  name: "CDH1 Mutation Analysis"
+  version: "1.0.0"
+  description: "Bioinformatics pipeline for CDH1 protein mutation analysis"
+
+# Data Paths
+paths:
+  data_root: "data/"
+  sequences: "data/sequences/"
+  alignments: "data/alignments/"
+  processed: "data/processed/"
+  models: "models/"
+  results: "results/"
+  logs: "logs/"
+
+# Species Configuration
+species:
+  human:
+    name: "Homo sapiens"
+    file: "human_CDH1.fasta"
+    uniprot_id: "P12830"
+  chimp:
+    name: "Pan troglodytes"
+    file: "chimp_CDH1.fasta"
+    uniprot_id: "A0A2J8Q404"
+  mouse:
+    name: "Mus musculus"
+    file: "mouse_CDH1.fasta"
+    uniprot_id: "P09803"
+  rat:
+    name: "Rattus norvegicus"
+    file: "rat_CDH1.fasta"
+    uniprot_id: "Q9R0T4"
+
+# Alignment Parameters
+alignment:
+  pairwise:
+    method: "globalxx"  # Global alignment with no gap penalties
+    match_score: 2
+    mismatch_score: -1
+    gap_open: -2
+    gap_extend: -0.5
+  
+  multiple:
+    tool: "clustalo"  # CLUSTAL Omega
+    iterations: 3
+    output_format: "clustal"
+
+# Phylogenetic Analysis
+phylogenetics:
+  distance_method: "identity"
+  tree_method: "nj"  # Neighbor Joining
+  bootstrap_replicates: 1000
+  output_format: "newick"
+
+# Deep Learning Configuration
+deep_learning:
+  model:
+    type: "LSTM"
+    lstm_units: 128
+    dropout_rate: 0.2
+    dense_units: 64
+    output_activation: "softmax"
+  
+  training:
+    batch_size: 32
+    epochs: 100
+    learning_rate: 0.001
+    validation_split: 0.2
+    early_stopping_patience: 10
+    reduce_lr_patience: 5
+  
+  preprocessing:
+    sequence_length: 900  # Max sequence length
+    encoding_method: "one_hot"  # or "embedding"
+    amino_acid_alphabet: "ACDEFGHIKLMNPQRSTVWY"
+
+# Visualization Settings
+visualization:
+  figure_size: [12, 8]
+  dpi: 300
+  format: "png"
+  color_palette: "viridis"
+  font_size: 12
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_logging: true
+  console_logging: true
+
+# Performance Settings
+performance:
+  n_jobs: -1  # Use all available cores
+  random_seed: 42
+  gpu_memory_growth: true
+  mixed_precision: false
+
+# Output Settings
+output:
+  save_intermediate_results: true
+  generate_plots: true
+  create_report: true
+  compress_results: false
